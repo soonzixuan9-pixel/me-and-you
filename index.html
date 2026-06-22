@@ -192,7 +192,8 @@ To Be Continued...
 </div>
 </section>
 
-  <!-- 📷照片 + 选择 + 星星入口（加在这里） -->
+
+  
 <div id="photoBox"></div>
 
 <div id="choiceBox">
@@ -324,126 +325,138 @@ if(i>=text.length)clearInterval(timer);
   setTimeout(showPhotos,800);
 }
 
+<script>
+
 /* 🌸樱花 + 苹果 */
 for(let i=0;i<45;i++){
-let d=document.createElement("div");
+    let d=document.createElement("div");
 
-  let photos=[
-"1.jpg","2.jpg","3.jpg","4.jpg","5.jpg",
-"6.jpg","7.jpg","8.jpg","9.jpg","10.jpg"
+    let r=Math.random();
+
+    if(r<0.015){
+        d.innerHTML="🍎";
+    }else if(r<0.04){
+        d.innerHTML="🍏";
+    }else{
+        d.innerHTML="🌸";
+    }
+
+    d.className="sakura";
+    d.style.left=Math.random()*100+"vw";
+    d.style.animationDuration=5+Math.random()*10+"s";
+
+    d.onclick=function(){
+        if(this.innerHTML==="🍏"){
+            alert("被你发现啦，我爱你");
+        }
+        if(this.innerHTML==="🍎"){
+            alert("求求你啦也爱我好不好");
+        }
+    }
+
+    document.body.appendChild(d);
+}
+
+
+/* 📷照片列表 */
+let photos=[
+"Screenshot_20260314_220839.jpg",
+"Screenshot_20260509_233404.jpg",
+"Screenshot_20260509_233404.jpg",
+"Screenshot_20260516_222408.jpg",
+"mmexport1774020893459_edit_5205853526816.jpg",
+"mmexport1778345957364.jpg",
+"mmexport1778996983253.jpg",
+"mmexport1780744443075.jpg",
+"mmexport1782136639159.jpg",
+"mmexport1782137464399.jpg"
 ];
 
 /* 📷第一组照片 */
 function showPhotos(){
-let box=document.getElementById("photoBox");
-let i=0;
+    let box=document.getElementById("photoBox");
+    let i=0;
 
-function next(){
-if(i>=photos.length){
-document.getElementById("choiceBox").style.display="block";
-return;
-}
+    function next(){
+        if(i>=photos.length){
+            document.getElementById("choiceBox").style.display="block";
+            return;
+        }
 
-let img=document.createElement("img");
-img.src=photos[i];
-img.style.width="260px";
-img.style.borderRadius="18px";
-img.style.margin="10px";
-img.style.opacity="0";
-img.style.transition="1.5s";
+        let img=document.createElement("img");
+        img.src=photos[i];
+        img.style.width="260px";
+        img.style.borderRadius="18px";
+        img.style.margin="10px";
+        img.style.opacity="0";
+        img.style.transition="1.5s";
 
-box.appendChild(img);
+        box.appendChild(img);
 
-setTimeout(()=>img.style.opacity="1",100);
+        setTimeout(()=>img.style.opacity="1",100);
 
-i++;
-setTimeout(next,4000);
-}
+        i++;
+        setTimeout(next,4000);
+    }
 
-next();
+    next();
 }
 
 /* ⭐星星 */
 function enterStars(){
+    document.getElementById("choiceBox").style.display="none";
 
-document.getElementById("choiceBox").style.display="none";
+    for(let i=0;i<10;i++){
+        let s=document.createElement("div");
+        s.innerHTML="⭐";
+        s.style.position="fixed";
+        s.style.left=Math.random()*100+"vw";
+        s.style.top=Math.random()*100+"vh";
+        s.style.fontSize="18px";
+        s.style.cursor="pointer";
 
-for(let i=0;i<10;i++){
-let s=document.createElement("div");
-s.innerHTML="⭐";
-s.style.position="fixed";
-s.style.left=Math.random()*100+"vw";
-s.style.top=Math.random()*100+"vh";
-s.style.fontSize="18px";
-s.style.cursor="pointer";
+        s.onclick=function(){
+            enterNight();
+        }
 
-s.onclick=function(){
-enterNight();
-}
-
-document.body.appendChild(s);
-}
+        document.body.appendChild(s);
+    }
 }
 
 /* 🌌第二章 */
 function enterNight(){
+    document.body.classList.add("dark");
 
-document.body.classList.add("dark");
+    document.querySelectorAll("section").forEach(e=>e.classList.add("hidden"));
 
-document.querySelectorAll("section").forEach(e=>e.classList.add("hidden"));
+    let box=document.getElementById("photoBox");
+    box.innerHTML="";
 
-let box=document.getElementById("photoBox");
-box.innerHTML="";
+    let i=0;
 
-let i=0;
+    function next(){
+        if(i>=photos.length) return;
 
-function next(){
-if(i>=photos.length) return;
+        let img=document.createElement("img");
+        img.src=photos[i];
+        img.style.width="260px";
+        img.style.borderRadius="18px";
+        img.style.margin="10px";
 
-let img=document.createElement("img");
-img.src=photos[i];
-img.style.width="260px";
-img.style.borderRadius="18px";
-img.style.margin="10px";
+        box.appendChild(img);
 
-box.appendChild(img);
+        setTimeout(()=>img.style.opacity="1",100);
 
-setTimeout(()=>img.style.opacity="1",100);
+        i++;
+        setTimeout(next,6000);
+    }
 
-i++;
-setTimeout(next,6000);
-}
-
-next();
-}
-
-let r=Math.random();
-
-if(r<0.015){
-d.innerHTML="🍎";
-}else if(r<0.04){
-d.innerHTML="🍏";
-}else{
-d.innerHTML="🌸";
-}
-
-d.className="sakura";
-d.style.left=Math.random()*100+"vw";
-d.style.animationDuration=5+Math.random()*10+"s";
-
-d.onclick=function(){
-if(this.innerHTML==="🍏"){
-alert("被你发现啦，我爱你");
-}
-if(this.innerHTML==="🍎"){
-alert("求求你啦也爱我好不好");
-}
-}
-
-document.body.appendChild(d);
+    next();
 }
 
 </script>
 
 </body>
 </html>
+
+  
